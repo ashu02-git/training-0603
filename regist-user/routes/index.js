@@ -30,7 +30,7 @@ router.post('/', (req, res, next) => {
   let age = req.body.age;
 
   db.serialize(() => {
-    db.exec(`INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,(error, stdout,stderr) => {
+    db.exec(`INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,(error, stdout, stderr) => {
       if(!error){
         res.redirect('/');
         // 必要？
@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
 router.get('/delete/:id',(req, res, next) => {
   const id = req.params.id
   db.serialize(() => {
-    db.exec(`DELETE FROM userdata WHERE id = "${id}"`, (error, stdout,stderr) => {
+    db.exec(`DELETE FROM userdata WHERE id = "${id}"`, (error, stdout, stderr) => {
       if(!error){
         res.redirect('/');
         // 必要？

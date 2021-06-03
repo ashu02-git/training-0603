@@ -24,5 +24,22 @@ router.get('/add', (req, res, next) => {
   res.render('add', {title: 'ユーザー新規登録'});
 });
 
+/* post Userdata */
+router.post('/', (req, res, next) => {
+  let name = req.body.name;
+  let age = req.body.age;
+
+  db.serialize(() => {
+    db.exec(`INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,(error, stdout,stderr) => {
+      if(!error){
+        res.redirect('/');
+        // 必要？
+      } else {
+        console.log(`stdout: ${stderr}`);
+      }
+    });
+  });
+}); 
+
 
 module.exports = router;

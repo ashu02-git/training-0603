@@ -19,4 +19,10 @@ router.get('/', (req, res, next) => {
   });
 });
 
+/* GET add page. */
+router.get('/add', (req, res, next) => {
+  res.render('add', {title: 'ユーザー新規登録'});
+});
+
+
 module.exports = router;

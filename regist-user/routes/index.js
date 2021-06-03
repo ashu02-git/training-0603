@@ -33,7 +33,41 @@ router.post('/', (req, res, next) => {
     db.exec(`INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,(error, stdout, stderr) => {
       if(!error){
         res.redirect('/');
-        // 必要？
+        // ↓　必要？
+      } else {
+        console.log(`stdout: ${stderr}`);
+      }
+    });
+  });
+});
+
+/* get edit page */ 
+router.get('/edit/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  db.serialize(() => {
+    db.get("SELECT * FROM userdata WHERE id = ?", [id], (error, rows) => {
+      if(!error){
+        let data = {
+          title: 'ユーザー編集',
+          mydata: rows
+        };
+        res.render('edit', data);
+      }
+    });
+  });
+});
+/* post edited data */
+router.post('/edit/:id',(req, res, next) =>{
+  const id = req.params.id;
+  let name = req.body.name;
+  let age = req.body.age;
+
+  db.serialize(() => {
+    db.exec(`UPDATE userdata SET name="${name}", age="${age}" WHERE id = "${id}"`, (error, stdout, stderr) => {
+      if(!error){
+        res.redirect('/');
+        // ↓　必要？
       } else {
         console.log(`stdout: ${stderr}`);
       }
@@ -48,7 +82,7 @@ router.get('/delete/:id',(req, res, next) => {
     db.exec(`DELETE FROM userdata WHERE id = "${id}"`, (error, stdout, stderr) => {
       if(!error){
         res.redirect('/');
-        // 必要？
+        // ↓　必要？
       } else {
         console.log(`stdout: ${stderr}`);
       }

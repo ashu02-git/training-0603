@@ -1,4 +1,4 @@
-const validator = (req, res, next) => {
+const inputValidator = (req, res, next) => {
   let nameLength = req.body.name.length;
   let ageLength = req.body.age.length;
   let error = true;
@@ -15,4 +15,4 @@ const validator = (req, res, next) => {
   }
 };
 
-module.exports = validator;
+module.exports = inputValidator;

@@ -4,7 +4,6 @@ var sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database('userdata.db');
 const inputValidator = require('../middleware/inputValidator');
-const editValidator = require('../middleware/editValidator');
 
 /* GET index page. */
 router.get('/', (req, res, next) => {
@@ -62,7 +61,7 @@ router.get('/edit/:id', (req, res, next) => {
   });
 });
 /* post edited data */
-router.post('/edit/:id', editValidator, (req, res, next) => {
+router.post('/edit/:id', inputValidator, (req, res, next) => {
   const id = req.params.id;
   let name = req.body.name;
   let age = req.body.age;

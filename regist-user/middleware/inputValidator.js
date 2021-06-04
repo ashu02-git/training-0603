@@ -8,17 +8,25 @@ const inputValidator = (req, res, next) => {
     nameFlag = true;
   }
 
-  if ((age.length === 0) || (age < 0)) {
+  if (age.length === 0 || age < 0) {
     ageFlag = true;
-  } 
+  }
 
   if (nameFlag || ageFlag) {
-
-    res.render('add', {
-      title: 'Error',
-      nameFlag: nameFlag,
-      ageFlag: ageFlag,
-    });
+    if (req.path === '/add') {
+      res.render(req.path.slice(1), {
+        title: 'Error',
+        nameFlag: nameFlag,
+        ageFlag: ageFlag,
+      });
+    } else {
+      res.render('edit', {
+        title: 'Error',
+        myData: req.params,
+        nameFlag: nameFlag,
+        ageFlag: ageFlag,
+      });
+    }
   } else {
     next();
   }

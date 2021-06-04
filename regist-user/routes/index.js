@@ -1,94 +1,102 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var sqlite3 = require('sqlite3');
+var sqlite3 = require("sqlite3");
 
-const db = new sqlite3.Database('userdata.db');
+const db = new sqlite3.Database("userdata.db");
 
 /* GET index page. */
-router.get('/', (req, res, next) => {
+router.get("/", (req, res, next) => {
   db.serialize(() => {
-    db.all("SELECT * FROM userdata", (err, rows) =>{
+    db.all("SELECT * FROM userdata", (err, rows) => {
       if (!err) {
         let data = {
-          title: 'ユーザー 一覧',
-          content: rows
+          title: "ユーザー 一覧",
+          content: rows,
         };
-        res.render('index', data)
+        res.render("index", data);
       }
     });
   });
 });
 
 /* GET add page. */
-router.get('/add', (req, res, next) => {
-  res.render('add', {title: 'ユーザー新規登録'});
+router.get("/add", (req, res, next) => {
+  res.render("add", { title: "ユーザー新規登録" });
 });
 
-/* post Userdata */
-router.post('/', (req, res, next) => {
+/* post UserData */
+router.post("/add", (req, res, next) => {
   let name = req.body.name;
   let age = req.body.age;
 
   db.serialize(() => {
-    db.exec(`INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,(error, stdout, stderr) => {
-      if(!error){
-        res.redirect('/');
-        // ↓　必要？
-      } else {
-        console.log(`stdout: ${stderr}`);
+    db.exec(
+      `INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,
+      (error, stdout, stderr) => {
+        if (!error) {
+          res.redirect("/");
+          // ↓　必要？
+        } else {
+          console.log(`stdout: ${stderr}`);
+        }
       }
-    });
+    );
   });
 });
 
-/* get edit page */ 
-router.get('/edit/:id', (req, res, next) => {
+/* get edit page */
+router.get("/edit/:id", (req, res, next) => {
   const id = req.params.id;
 
   db.serialize(() => {
     db.get("SELECT * FROM userdata WHERE id = ?", [id], (error, rows) => {
-      if(!error){
+      if (!error) {
         let data = {
-          title: 'ユーザー編集',
-          mydata: rows
+          title: "ユーザー編集",
+          mydata: rows,
         };
-        res.render('edit', data);
+        res.render("edit", data);
       }
     });
   });
 });
 /* post edited data */
-router.post('/edit/:id',(req, res, next) =>{
+router.post("/edit/:id", (req, res, next) => {
   const id = req.params.id;
   let name = req.body.name;
   let age = req.body.age;
 
   db.serialize(() => {
-    db.exec(`UPDATE userdata SET name="${name}", age="${age}" WHERE id = "${id}"`, (error, stdout, stderr) => {
-      if(!error){
-        res.redirect('/');
-        // ↓　必要？
-      } else {
-        console.log(`stdout: ${stderr}`);
+    db.exec(
+      `UPDATE userdata SET name="${name}", age="${age}" WHERE id = "${id}"`,
+      (error, stdout, stderr) => {
+        if (!error) {
+          res.redirect("/");
+          // ↓　必要？
+        } else {
+          console.log(`stdout: ${stderr}`);
+        }
       }
-    });
+    );
   });
 });
 
-/* delete Userdata */
-router.get('/delete/:id',(req, res, next) => {
-  const id = req.params.id
+/* delete UserData */
+router.get("/delete/:id", (req, res, next) => {
+  const id = req.params.id;
   db.serialize(() => {
-    db.exec(`DELETE FROM userdata WHERE id = "${id}"`, (error, stdout, stderr) => {
-      if(!error){
-        res.redirect('/');
-        // ↓　必要？
-      } else {
-        console.log(`stdout: ${stderr}`);
+    db.exec(
+      `DELETE FROM userdata WHERE id = "${id}"`,
+      (error, stdout, stderr) => {
+        if (!error) {
+          res.redirect("/");
+          // ↓　必要？
+        } else {
+          console.log(`stdout: ${stderr}`);
+        }
       }
-    });
+    );
   });
-}); 
-
+});
 
 module.exports = router;

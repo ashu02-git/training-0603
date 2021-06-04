@@ -1,4 +1,4 @@
-const validator = (req, res, next) => {
+const editValidator = (req, res, next) => {
   let nameLength = req.body.name.length;
   let ageLength = req.body.age.length;
   let error = true;
@@ -9,10 +9,10 @@ const validator = (req, res, next) => {
 
   if (error) {
     console.log('error');
-    res.render('add', { title: 'error' });
+    res.redirect('/edit/' + req.params.id);
   } else {
     next();
   }
 };
 
-module.exports = validator;
+module.exports = editValidator;

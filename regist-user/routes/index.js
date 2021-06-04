@@ -3,7 +3,8 @@ var router = express.Router();
 var sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database('userdata.db');
-const validator = require('../middleware/validator');
+const inputValidator = require('../middleware/inputValidator');
+const editValidator = require('../middleware/editValidator');
 
 /* GET index page. */
 router.get('/', (req, res, next) => {
@@ -26,7 +27,7 @@ router.get('/add', (req, res, next) => {
 });
 
 /* POST Add UserData */
-router.post('/add', validator, (req, res, next) => {
+router.post('/add', inputValidator, (req, res, next) => {
   let name = req.body.name;
   let age = req.body.age;
 
@@ -61,7 +62,7 @@ router.get('/edit/:id', (req, res, next) => {
   });
 });
 /* post edited data */
-router.post('/edit/:id', (req, res, next) => {
+router.post('/edit/:id', editValidator, (req, res, next) => {
   const id = req.params.id;
   let name = req.body.name;
   let age = req.body.age;

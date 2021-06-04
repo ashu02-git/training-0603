@@ -14,20 +14,20 @@
 
   <body>
     <h1><%= title %></h1>
-    <form method="POST" action="/edit/<%= mydata.id %>">
+    <form method="POST" action="/edit/<%= myData.id %>">
       <label for="name">名前</label>
       <input
         type="text"
         class="form-control"
         name="name"
-        value="<%= mydata.name %>"
+        value="<%= myData.name %>"
       /><br />
       <label for="age">年齢 </label>
       <input
         type="number"
         class="form-control"
         name="age"
-        value="<%= mydata.age %>"
+        value="<%= myData.age %>"
       /><br />
       <button type="submit" class="btn btn-warning">編集</button>
     </form>

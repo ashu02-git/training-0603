@@ -15,11 +15,13 @@ const inputValidator = (req, res, next) => {
   }
 
   if (errorMessageList.length > 0) {
+    const { name, age } = req.body;
     if (req.path === '/add') {
-      res.render('add', { errorMessageList });
-      console.log(errorMessageList);
+      res.render('add', { errorMessageList, name, age });
     } else {
-      res.render('edit', { errorMessageList, userData: req.params });
+      const id = req.params.id;
+      res.render('edit', { errorMessageList, id, name, age });
+      console.log(req.params.id);
     }
   } else {
     next();

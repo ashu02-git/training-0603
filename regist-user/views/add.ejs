@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>ユーザー新規登録</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <!-- CSS only -->
     <link
@@ -13,17 +13,10 @@
   </head>
 
   <body>
-    <h1><%= title %></h1>
+    <h1>ユーザー新規登録</h1>
 
-    <% if (title === 'Error') { %>
-    <div class="border border-danger">
-      <% if (nameFlag) { %>
-      <li>名前が未入力です</li>
-      <% } %> <% if (ageFlag) { %>
-      <li>年齢が未入力です</li>
-      <% } %>
-    </div>
-    <% } %>
+    <!-- 入力エラー文 -->
+    <%- include('./inputError') %>
 
     <form method="POST" action="/add">
       <label for="name">名前</label>
@@ -31,6 +24,7 @@
       <label for="age">年齢 </label>
       <input type="number" name="age" class="form-control" /><br />
       <button type="submit" class="btn btn-primary">ユーザー登録</button>
+      <a href="../" class="btn btn-success">一覧に戻る</a>
     </form>
   </body>
 </html>

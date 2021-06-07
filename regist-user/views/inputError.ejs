@@ -1,0 +1,7 @@
+<% if (errorMessageList.length > 0) { %>
+<div class="border border-danger">
+  <% for (message of errorMessageList) { %>
+  <li><%= message %></li>
+  <% } %>
+</div>
+<% } %>

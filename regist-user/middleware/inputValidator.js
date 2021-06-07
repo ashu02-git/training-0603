@@ -1,22 +1,25 @@
 const inputValidator = (req, res, next) => {
-  let nameLength = req.body.name.length;
-  let age = req.body.age;
-  let nameFlag = false;
-  let ageFlag = false;
+  const { name, age } = req.body;
+  const errorMessageList = [];
 
-  if (nameLength === 0) nameFlag = true;
-  if (age.length === 0 || age < 0) ageFlag = true;
+  if (name.length === 0) {
+    errorMessageList.push('名前が未記入です。');
+  }
 
-  if (nameFlag || ageFlag) {
+  if (age.length === 0) {
+    errorMessageList.push('年齢が未記入です。');
+  }
+
+  if (age < 0) {
+    errorMessageList.push('年齢にマイナスが入力されています。');
+  }
+
+  if (errorMessageList.length > 0) {
     if (req.path === '/add') {
-      res.render(req.path.slice(1), { title: 'Error', nameFlag, ageFlag });
+      res.render('add', { errorMessageList });
+      console.log(errorMessageList);
     } else {
-      res.render('edit', {
-        title: 'Error',
-        myData: req.params,
-        nameFlag,
-        ageFlag,
-      });
+      res.render('edit', { errorMessageList, userData: req.params });
     }
   } else {
     next();

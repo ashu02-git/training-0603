@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>ユーザー一覧</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <!-- CSS only -->
     <link
@@ -13,7 +13,7 @@
   </head>
 
   <body>
-    <h1><%= title %></h1>
+    <h1>ユーザー一覧</h1>
 
     <a href="/add" class="btn btn-primary">新規登録</a>
 
@@ -24,15 +24,15 @@
         <th>年齢</th>
         <th>登録日</th>
       </tr>
-      <% for (let i in content) { %>
+      <% for (user in usersData) { %>
       <tr>
-        <% let obj = content[i]%>
-        <td class="id"><%= obj.id %></td>
-        <td class="name"><%= obj.name %></td>
-        <td class="age"><%= obj.age %></td>
-        <td class="date"><%= obj.date %></td>
-        <td><a href="/edit/<%= obj.id %>" class="btn btn-warning">編集 </a></td>
-        <td><a href="/delete/<%= obj.id %>" class="btn btn-danger">削除</a></td>
+        <% let {id, name, age, date} = usersData[user] %>
+        <td class="id"><%= id %></td>
+        <td class="name"><%= name %></td>
+        <td class="age"><%= age %></td>
+        <td class="date"><%= date %></td>
+        <td><a href="/edit/<%= id %>" class="btn btn-warning">編集 </a></td>
+        <td><a href="/delete/<%= id %>" class="btn btn-danger">削除</a></td>
       </tr>
       <% }%>
     </table>

@@ -1,20 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var sqlite3 = require('sqlite3');
+let express = require('express');
+let router = express.Router();
+let sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database('userdata.db');
 const inputValidator = require('../middleware/inputValidator');
+const errorMessageList = [];
 
 /* GET index page. */
 router.get('/', (req, res, next) => {
   db.serialize(() => {
-    db.all('SELECT * FROM userdata', (err, rows) => {
+    db.all('SELECT * FROM userdata', (err, usersData) => {
       if (!err) {
-        let data = {
-          title: 'ユーザー 一覧',
-          content: rows,
-        };
-        res.render('index', data);
+        res.render('index', { usersData });
       }
     });
   });
@@ -22,7 +19,7 @@ router.get('/', (req, res, next) => {
 
 /* GET add page. */
 router.get('/add', (req, res, next) => {
-  res.render('add', { title: 'ユーザー新規登録' });
+  res.render('add', { errorMessageList });
 });
 
 /* POST Add UserData */
@@ -44,13 +41,9 @@ router.get('/edit/:id', (req, res, next) => {
   const id = req.params.id;
 
   db.serialize(() => {
-    db.get('SELECT * FROM userdata WHERE id = ?', [id], (error, rows) => {
+    db.get('SELECT * FROM userdata WHERE id = ?', [id], (error, userData) => {
       if (!error) {
-        let data = {
-          title: 'ユーザー編集',
-          myData: rows,
-        };
-        res.render('edit', data);
+        res.render('edit', { userData, errorMessageList });
       }
     });
   });

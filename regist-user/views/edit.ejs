@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>ユーザー編集></title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <!-- CSS only -->
     <link
@@ -13,38 +13,27 @@
   </head>
 
   <body>
-    <h1><%= title %></h1>
+    <h1>ユーザー編集</h1>
 
-    <% if (title === 'Error') { %>
-      <div class="border border-danger">
-        <% if (nameFlag) { %>
-        <li>名前が未入力です</li>
-        <% } %> <% if (ageFlag) { %>
-        <li>年齢が未入力です</li>
-        <% } %>
-      </div>
-    <% } %>
-
-    <form method="POST" action="/edit/<%= myData.id %>">
+    <!-- 入力エラー文 -->
+    <%- include('./inputError'); %> <% let {id, name, age} = userData; %>
+    <form method="POST" action="/edit/<%= id %>">
       <label for="name">名前</label>
       <input
         type="text"
         class="form-control"
         name="name"
-        value="<%= myData.name %>"
+        value="<%= name %>"
       /><br />
       <label for="age">年齢 </label>
       <input
         type="number"
         class="form-control"
         name="age"
-        value="<%= myData.age %>"
+        value="<%= age %>"
       /><br />
       <button type="submit" class="btn btn-warning">編集</button>
       <a href="../" class="btn btn-success">一覧に戻る</a>
     </form>
-
-    
-
   </body>
 </html>

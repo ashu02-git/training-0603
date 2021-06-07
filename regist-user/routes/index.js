@@ -27,18 +27,13 @@ router.get('/add', (req, res, next) => {
 
 /* POST Add UserData */
 router.post('/add', inputValidator, (req, res, next) => {
-  let name = req.body.name;
-  let age = req.body.age;
+  let { name, age } = req.body;
 
   db.serialize(() => {
     db.exec(
       `INSERT INTO userdata (name, age) VALUES("${name}","${age}")`,
       (error, stdout, stderr) => {
-        if (!error) {
-          res.redirect('/');
-        } else {
-          console.log(`stdout: ${stderr}`);
-        }
+        !error ? res.redirect('/') : console.log(`stdout: ${stderr}`);
       }
     );
   });
@@ -63,18 +58,13 @@ router.get('/edit/:id', (req, res, next) => {
 /* post edited data */
 router.post('/edit/:id', inputValidator, (req, res, next) => {
   const id = req.params.id;
-  let name = req.body.name;
-  let age = req.body.age;
+  let { name, age } = req.body;
 
   db.serialize(() => {
     db.exec(
       `UPDATE userdata SET name="${name}", age="${age}" WHERE id = "${id}"`,
       (error, stdout, stderr) => {
-        if (!error) {
-          res.redirect('/');
-        } else {
-          console.log(`stdout: ${stderr}`);
-        }
+        !error ? res.redirect('/') : console.log(`stdout: ${stderr}`);
       }
     );
   });
@@ -87,11 +77,7 @@ router.get('/delete/:id', (req, res, next) => {
     db.exec(
       `DELETE FROM userdata WHERE id = "${id}"`,
       (error, stdout, stderr) => {
-        if (!error) {
-          res.redirect('/');
-        } else {
-          console.log(`stdout: ${stderr}`);
-        }
+        !error ? res.redirect('/') : console.log(`stdout: ${stderr}`);
       }
     );
   });

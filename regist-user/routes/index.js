@@ -19,7 +19,9 @@ router.get('/', (req, res, next) => {
 
 /* GET add page. */
 router.get('/add', (req, res, next) => {
-  res.render('add', { errorMessageList });
+  let name = '';
+  let age = '';
+  res.render('add', { errorMessageList, name, age });
 });
 
 /* POST Add UserData */
@@ -43,7 +45,8 @@ router.get('/edit/:id', (req, res, next) => {
   db.serialize(() => {
     db.get('SELECT * FROM userdata WHERE id = ?', [id], (error, userData) => {
       if (!error) {
-        res.render('edit', { userData, errorMessageList });
+        let { name, age } = userData;
+        res.render('edit', { errorMessageList, id, name, age });
       }
     });
   });

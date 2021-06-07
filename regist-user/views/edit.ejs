@@ -16,7 +16,7 @@
     <h1>ユーザー編集</h1>
 
     <!-- 入力エラー文 -->
-    <%- include('./inputError'); %> <% let {id, name, age} = userData; %>
+    <%- include('./inputError'); %>
     <form method="POST" action="/edit/<%= id %>">
       <label for="name">名前</label>
       <input

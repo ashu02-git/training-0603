@@ -20,9 +20,19 @@
 
     <form method="POST" action="/add">
       <label for="name">名前</label>
-      <input type="text" name="name" class="form-control" /><br />
+      <input
+        type="text"
+        name="name"
+        class="form-control"
+        value="<%= name %>"
+      /><br />
       <label for="age">年齢 </label>
-      <input type="number" name="age" class="form-control" /><br />
+      <input
+        type="number"
+        name="age"
+        class="form-control"
+        value="<%= age %>"
+      /><br />
       <button type="submit" class="btn btn-primary">ユーザー登録</button>
       <a href="../" class="btn btn-success">一覧に戻る</a>
     </form>
